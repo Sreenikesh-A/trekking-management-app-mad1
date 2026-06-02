@@ -1,2 +1,2 @@
 # trekking-management-app-mad1
-This is a trekking management app done for my modern application development - 1 project
+Flask Based Web Application on "trekking management" done for my modern application development - 1 (MAD-1)project
