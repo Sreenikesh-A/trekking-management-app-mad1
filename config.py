@@ -1,0 +1,3 @@
+SQLALCHEMY_DATABASE_URI=sqlite:///trekking.db
+SQLALCHEMY_TRACK_MODIFICATIONS=False
+secret_key=sree_secret_key
