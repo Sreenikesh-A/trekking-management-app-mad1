@@ -1,1 +1,1 @@
-Trekking app - MAD-1
+# trekking-management-app-mad1
