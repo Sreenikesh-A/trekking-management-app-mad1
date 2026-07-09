@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+</head>
+<body>
+    <h1>Register</h1>
+    <form action="/register" method="POST">
+        <label>Fullname</label><br>
+        <input type="text" name="name" required>
+        <br><br>
+        <label>Email</label><br>
+        <input type="email" name="mail" required>
+        <br><br>
+
+        <label>Password</label><br>
+        <input type="password" name="password" required>
+        <br><br>
+
+        <label>Role</label><br>
+
+        <select name="role">
+            <option value="User">User</option>
+            <option value="Trek Staff">Trek Staff</option>
+        </select>
+        <br><br>
+        <button type="submit">Register</button>
+
+    </form>
+    <br>
+    <a href="/">Back to Login</a>
+
+</body>
+</html>
