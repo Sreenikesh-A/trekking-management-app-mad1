@@ -22,6 +22,10 @@ def register():
 @app.route('/homepage')
 def homepage():
     return render_template('homepage.html')
+
+@app.route('/manage_trek')
+def manage_trek():
+    return render_template("manage_trek.html")
 if __name__ == '__main__': 
     app.run(debug=True)
  

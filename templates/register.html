@@ -4,29 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>Register</h1>
+<body class="container mt-5">
+    <h1 class="text-center">Register</h1>
     <form action="/register" method="POST">
-        <label>Fullname</label><br>
-        <input type="text" name="name" required>
-        <br><br>
-        <label>Email</label><br>
-        <input type="email" name="mail" required>
-        <br><br>
+        <label class="form-label">Fullname</label>
+        <input type="text" name="name" class="form-control" required>
+        <br>
+        <label>Email</label>
+        <input type="email" name="mail" class="form-control" required>
+        <br>
 
-        <label>Password</label><br>
-        <input type="password" name="password" required>
-        <br><br>
+        <label class="form-label">Password</label>
+        <input type="password" name="password" class="form-control"required>
+        <br>
 
-        <label>Role</label><br>
+        <label class="form-label">Role</label>
 
-        <select name="role">
+        <select name="role" class="form-control" required>
             <option value="User">User</option>
             <option value="Trek Staff">Trek Staff</option>
         </select>
-        <br><br>
-        <button type="submit">Register</button>
+        <br>
+        <button type="submit" class="btn btn-primary">Register</button>
 
     </form>
     <br>
