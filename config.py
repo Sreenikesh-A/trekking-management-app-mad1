@@ -1,2 +1,4 @@
 class Config:
-    secret_key="sree-secret-key"
+    SQLALCHEMY_DATABASE_URI = "sqlite:///trek.db"
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SECRET_KEY = "sree-secret-key"
