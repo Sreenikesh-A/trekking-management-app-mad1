@@ -31,16 +31,26 @@
 
         </thead>
         <tbody>
-            <tr>
+{% for trek in treks %}
 
-                <td colspan="6" class="text-center">
-                    No treks available.
-                </td>
+<tr>
+    <td>{{ trek.trek_name }}</td>
+    <td>{{ trek.location }}</td>
+    <td>{{ trek.difficulty }}</td>
+    <td>{{ trek.slots }}</td>
+    <td>{{ trek.status }}</td>
+    <td>
+    <a href="/edit_trek/{{ trek.id }}" class="btn btn-warning btn-sm">
+        Edit
+    </a>
+    <a href="/delete_trek/{{ trek.id }}" class="btn btn-danger btn-sm">
+        Delete
+    </a>
+</td>
 
-            </tr>
-
-        </tbody>
-
+</tr>
+{% endfor %}
+</tbody>
     </table>
 
 </body>
