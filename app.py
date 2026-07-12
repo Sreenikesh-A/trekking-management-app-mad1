@@ -11,9 +11,14 @@ def login():
         password=request.form['password']
         user=User.query.filter_by(mail=mail,password=password).first()
         if user:
-            return render_template("homepage.html")
+            if user.role == "Trek Staff":
+                if user.status == "Pending":
+                    return "Your account is waiting for admin approval."
+                if user.status == "Blacklisted":
+                    return "Your account has been blacklisted."
+            return redirect('/homepage')
         else:
-            return "Invalid password"
+            return "Invalid Email or Password"
     return render_template('loginp.html') 
 
 @app.route('/register',methods=['GET','POST'])
@@ -32,7 +37,7 @@ def register():
         new_user = User(name=name,mail=mail,password=password,role=role,status=status)
         db.session.add(new_user)
         db.session.commit()
-        return f"{name} registered successfully as {role}"
+        return redirect('/')
 
     return render_template('register.html')
 @app.route('/homepage')
@@ -84,6 +89,26 @@ def delete_trek(id):
     db.session.delete(trek)
     db.session.commit()
     return redirect('/manage_trek')
+
+@app.route('/manage_staff')
+def manage_staff():
+    staffs = User.query.filter_by(role="Trek Staff").all()
+    return render_template("manage_staff.html",staffs=staffs)
+
+@app.route('/approve_staff/<int:id>')
+def approve_staff(id):
+    staff = User.query.get(id)
+    staff.status = "Approved"
+    db.session.commit()
+    return redirect('/manage_staff')  
+
+@app.route('/blacklist_staff/<int:id>')
+def blacklist_staff(id):
+    staff = User.query.get(id)
+    staff.status = "Blacklisted"
+    db.session.commit()
+    return redirect('/manage_staff')
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
 if __name__ == '__main__': 
     app.run(debug=True)
  
