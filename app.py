@@ -16,7 +16,12 @@ def login():
                     return "Your account is waiting for admin approval."
                 if user.status == "Blacklisted":
                     return "Your account has been blacklisted."
-            return redirect('/homepage')
+                return redirect(f'/staff_page/{user.id}')
+            
+            elif user.role == "User":
+                return redirect('/user_page')
+            else:
+                return redirect('/homepage')
         else:
             return "Invalid Email or Password"
     return render_template('loginp.html') 
@@ -41,7 +46,7 @@ def register():
 
     return render_template('register.html')
 @app.route('/homepage')
-def homepage():
+def homepage():  #admin page
     total_treks = Trek.query.count()
     total_users = User.query.filter_by(role="User").count()
     total_staff = User.query.filter_by(role="Trek Staff").count()
@@ -119,7 +124,33 @@ def assign_staff(id):
         return redirect('/manage_trek')
 
     return render_template("assign_staff.html",trek=trek,staffs=staffs)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+
+@app.route('/staff_page/<int:id>')
+def staff_page(id):
+    treks = Trek.query.filter_by(assigned_staff_id=id).all()
+    return render_template("staff_page.html",treks=treks)
+
+@app.route('/user_page')
+def user_page():
+    treks = Trek.query.filter_by(status="Open").all()
+    return render_template("user_page.html",treks=treks)  
+
+@app.route('/book_trek/<int:id>')
+def book_trek(id):
+    trek = Trek.query.get(id)
+    if trek.slots > 0:
+        trek.slots = trek.slots - 1
+        new_booking = Booking(user_id=1,trek_id=trek.id,status="Booked")
+        db.session.add(new_booking)                                                                                                                                                                 
+        db.session.commit()
+        return redirect('/user_page')
+    return "No Slots Available"
+    
+@app.route('/booking_history')
+def booking_history():
+    bookings = Booking.query.all()
+    return render_template(
+    "booking_history.html",bookings=bookings)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
 if __name__ == '__main__': 
     app.run(debug=True)
  

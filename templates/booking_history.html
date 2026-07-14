@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Booking History</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-5">
+<h2>Booking History</h2>
+<hr>
+<table class="table table-bordered">
+<thead>
+<tr>
+<th>Booking ID</th>
+<th>User ID</th>
+<th>Trek ID</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+{% for booking in bookings %}
+<tr>
+<td>{{ booking.id }}</td>
+<td>{{ booking.user_id }}</td>
+<td>{{ booking.trek_id }}</td>
+<td>{{ booking.status }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</body>
+</html>
