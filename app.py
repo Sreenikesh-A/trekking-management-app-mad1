@@ -108,6 +108,17 @@ def blacklist_staff(id):
     staff.status = "Blacklisted"
     db.session.commit()
     return redirect('/manage_staff')
+
+@app.route('/assign_staff/<int:id>', methods=['GET', 'POST'])
+def assign_staff(id):
+    trek = Trek.query.get(id)
+    staffs = User.query.filter_by(role="Trek Staff",status="Approved").all()
+    if request.method == 'POST':
+        trek.assigned_staff_id = request.form['staff_id']
+        db.session.commit()
+        return redirect('/manage_trek')
+
+    return render_template("assign_staff.html",trek=trek,staffs=staffs)
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 if __name__ == '__main__': 
     app.run(debug=True)

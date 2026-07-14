@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Assign Staff</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-5">
+    <h2>Assign Staff</h2>
+    <hr>
+    <form method="POST">
+        <p><strong>Trek:</strong> {{ trek.trek_name }}</p>
+        <label>Select Staff</label>
+        <select name="staff_id" class="form-control">
+            {% for staff in staffs %}
+            <option value="{{ staff.id }}">
+                {{ staff.name }}
+            </option>
+            {% endfor %}
+        </select>
+        <br>
+        <button type="submit" class="btn btn-success">
+            Assign
+        </button>
+        <a href="/manage_trek" class="btn btn-secondary">
+            Back
+        </a>
+    </form>
+</body>
+</html>

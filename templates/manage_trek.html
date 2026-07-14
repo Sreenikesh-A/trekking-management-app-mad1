@@ -26,6 +26,7 @@
                 <th>Difficulty</th>
                 <th>Available slots</th>
                 <th>Status</th>
+                <th>Assigned Staff</th>
                 <th>Action</th>
             </tr>
 
@@ -40,19 +41,24 @@
     <td>{{ trek.slots }}</td>
     <td>{{ trek.status }}</td>
     <td>
+        {% if trek.assigned_staff_id %}
+            {{ trek.assigned_staff_id }}
+        {% else %}
+            Not Assigned
+        {% endif %}
+    </td>
+<td>
     <a href="/edit_trek/{{ trek.id }}" class="btn btn-warning btn-sm">
-        Edit
-    </a>
+        Edit</a>
     <a href="/delete_trek/{{ trek.id }}" class="btn btn-danger btn-sm">
-        Delete
-    </a>
-</td>
+        Delete</a>
+    <a href="/assign_staff/{{ trek.id }}" class="btn btn-primary btn-sm">
+        Assign Staff</a>
+    </td>
 
 </tr>
 {% endfor %}
 </tbody>
     </table>
-
 </body>
-
 </html>
