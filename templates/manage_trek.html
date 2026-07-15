@@ -16,11 +16,15 @@
     <a href="/add_trek" class="btn btn-primary">Add Trek</a>
     <a href="/" class="btn btn-danger">Logout</a>
     <br><br>
-
+    <form method="GET">
+        <input type="text" name="search" placeholder="Search Trek" class="form-control">
+    <br>
+    <button class="btn btn-success">Search</button>
+</form>
+<br>
     <table class="table table-bordered">
         <thead>    
             <tr>
-
                 <th>Trek name</th>
                 <th>Location</th>
                 <th>Difficulty</th>
@@ -29,11 +33,9 @@
                 <th>Assigned Staff</th>
                 <th>Action</th>
             </tr>
-
         </thead>
         <tbody>
 {% for trek in treks %}
-
 <tr>
     <td>{{ trek.trek_name }}</td>
     <td>{{ trek.location }}</td>
@@ -47,15 +49,11 @@
             Not Assigned
         {% endif %}
     </td>
-<td>
-    <a href="/edit_trek/{{ trek.id }}" class="btn btn-warning btn-sm">
-        Edit</a>
-    <a href="/delete_trek/{{ trek.id }}" class="btn btn-danger btn-sm">
-        Delete</a>
-    <a href="/assign_staff/{{ trek.id }}" class="btn btn-primary btn-sm">
-        Assign Staff</a>
+    <td>
+    <a href="/edit_trek/{{ trek.id }}" class="btn btn-warning btn-sm">Edit</a>
+    <a href="/delete_trek/{{ trek.id }}" class="btn btn-danger btn-sm">Delete</a>
+    <a href="/assign_staff/{{ trek.id }}" class="btn btn-primary btn-sm">Assign Staff</a>
     </td>
-
 </tr>
 {% endfor %}
 </tbody>

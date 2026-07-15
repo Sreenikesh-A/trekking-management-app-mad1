@@ -1,7 +1,8 @@
-from flask import Flask,render_template, request,redirect
+from flask import Flask,render_template, request,redirect,session
 from config import Config
 from models import db,User,Trek,Booking
 app = Flask(__name__)
+app.secret_key ='sree_secret_key'
 app.config.from_object(Config)
 db.init_app(app)
 @app.route('/', methods=['GET', 'POST'])
@@ -11,6 +12,7 @@ def login():
         password=request.form['password']
         user=User.query.filter_by(mail=mail,password=password).first()
         if user:
+            session['user_id'] = user.id
             if user.role == "Trek Staff":
                 if user.status == "Pending":
                     return "Your account is waiting for admin approval."
@@ -56,7 +58,11 @@ def homepage():  #admin page
 
 @app.route('/manage_trek')
 def manage_trek():
-    treks=Trek.query.all()
+    search=request.args.get('search')
+    if search:
+        treks=Trek.query.filter(Trek.trek_name.contains(search)).all()
+    else:
+        treks=Trek.query.all()
     return render_template("manage_trek.html",treks=treks)
 
 @app.route('/add_trek', methods=['GET', 'POST'])
@@ -97,7 +103,11 @@ def delete_trek(id):
 
 @app.route('/manage_staff')
 def manage_staff():
-    staffs = User.query.filter_by(role="Trek Staff").all()
+    search=request.args.get('search')
+    if search:
+        staffs = User.query.filter(User.role=="Trek Staff",User.name.contains(search)).all()
+    else:
+        staffs = User.query.filter_by(role="Trek Staff").all()
     return render_template("manage_staff.html",staffs=staffs)
 
 @app.route('/approve_staff/<int:id>')
@@ -138,19 +148,57 @@ def user_page():
 @app.route('/book_trek/<int:id>')
 def book_trek(id):
     trek = Trek.query.get(id)
+    existing_booking = Booking.query.filter_by(user_id=session['user_id'],trek_id=id).first()
+    if existing_booking:
+        return "You have already booked this trek."
     if trek.slots > 0:
         trek.slots = trek.slots - 1
-        new_booking = Booking(user_id=1,trek_id=trek.id,status="Booked")
+        new_booking = Booking(user_id=session['user_id'],trek_id=trek.id,status="Booked")
         db.session.add(new_booking)                                                                                                                                                                 
         db.session.commit()
+    
         return redirect('/user_page')
     return "No Slots Available"
     
 @app.route('/booking_history')
 def booking_history():
     bookings = Booking.query.all()
-    return render_template(
-    "booking_history.html",bookings=bookings)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+    return render_template("booking_history.html",bookings=bookings) 
+
+@app.route('/my_bookings')
+def bookings():
+    bookings = Booking.query.filter_by(user_id=session['user_id']).all()
+    return render_template("bookings.html",bookings=bookings)  
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect('/')
+
+@app.route('/manage_bookings')
+def manage_bookings():
+    bookings = Booking.query.all()
+    return render_template("manage_bookings.html",bookings=bookings)
+
+@app.route('/participants/<int:id>')
+def participants(id):
+    bookings = Booking.query.filter_by(trek_id=id,status="Booked").all()
+    users = []
+    for booking in bookings:
+        user = User.query.get(booking.user_id)
+        users.append(user)
+    return render_template("participants.html",users=users)  
+
+@app.route('/update_trek/<int:id>', methods=['GET', 'POST'])
+def update_trek(id):
+    trek = Trek.query.get(id)
+    if request.method == 'POST':
+        trek.slots = request.form['slots']
+        trek.status = request.form['status']
+        db.session.commit()
+        return redirect(f"/staff_page/{session['user_id']}")
+    return render_template("update_trek.html",trek=trek) 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
 if __name__ == '__main__': 
     app.run(debug=True)
  

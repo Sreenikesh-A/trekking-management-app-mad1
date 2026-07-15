@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Trek</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="container mt-5">
+    <h2>Update Trek</h2>
+    <hr>
+    <form method="POST">
+
+        <div class="mb-3">
+            <label>Available Slots</label>
+            <input
+                type="number"
+                class="form-control"
+                name="slots"
+                value="{{ trek.slots }}"
+                required>
+        </div>
+
+        <div class="mb-3">
+            <label>Status</label>
+            <select
+                class="form-control"
+                name="status">
+
+                <option {% if trek.status=="Open" %}selected{% endif %}>Open</option>
+                <option {% if trek.status=="Closed" %}selected{% endif %}>Closed</option>
+                <option {% if trek.status=="Completed" %}selected{% endif %}>Completed</option>
+            </select>
+        </div>
+        <button class="btn btn-success">Update</button>
+        <a href="/staff_page/{{ session['user_id'] }}"
+           class="btn btn-secondary">Back</a>
+    </form>
+</body>
+</html>

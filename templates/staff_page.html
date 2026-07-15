@@ -7,7 +7,7 @@
 <body class="container mt-5">
     <h2>Staff Dashboard</h2>
     <hr>
-    <a href="/" class="btn btn-danger">Logout</a>
+    <a href="/logout" class="btn btn-danger">Logout</a>
 
     <br><br>
     <h4>Assigned Treks</h4>
@@ -19,6 +19,8 @@
                 <th>Difficulty</th>
                 <th>Slots</th>
                 <th>Status</th>
+                <th>Participants</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -29,6 +31,14 @@
             <td>{{ trek.difficulty }}</td>
             <td>{{ trek.slots }}</td>
             <td>{{ trek.status }}</td>
+            <td>
+                <a href="/participants/{{ trek.id }}"
+                class="btn btn-primary btn-sm">View</a>
+            </td>
+            <td>
+                <a href="/update_trek/{{ trek.id }}"
+                class="btn btn-warning btn-sm">Update</a>
+            </td>
         </tr>
         {% endfor %}
         </tbody>

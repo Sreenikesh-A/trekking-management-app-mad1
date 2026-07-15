@@ -13,6 +13,17 @@
     <hr>
     <a href="/homepage" class="btn btn-secondary">Home</a>
     <br><br>
+    <form method="GET">
+    <input
+        type="text"
+        name="search"
+        placeholder="Search Staff"
+        class="form-control" 
+        value="{{ request.args.get('search', '') }}">
+    <br>
+    <button class="btn btn-success">Search</button>
+</form> 
+<br>
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -30,13 +41,9 @@
             <td>{{ staff.status }}</td>
             <td>
                 <a href="/approve_staff/{{ staff.id }}"
-                 class="btn btn-success btn-sm">
-                 Approve
-                </a>    
+                 class="btn btn-success btn-sm">Approve</a>    
                 <a href="/blacklist_staff/{{ staff.id }}"
-                   class="btn btn-danger btn-sm">
-                   Blacklist
-                </a>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           </a>
+                   class="btn btn-danger btn-sm">Blacklist</a>
             </td>
         </tr>
         {% endfor %}

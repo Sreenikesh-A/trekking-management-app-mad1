@@ -34,32 +34,20 @@
             <label class="form-label">Duration (Days)</label>
             <input type="number" class="form-control" name="duration" value="{{ trek.duration if trek else '' }}" required>
         </div>
-
         <div class="mb-3">
             <label class="form-label">Available Slots</label>
             <input type="number" class="form-control" name="slots" value="{{ trek.slots if trek else '' }}" required>
         </div>
-
         <div class="mb-3">
             <label class="form-label">Status</label>
-
             <select class="form-select" name="status">
                 <option>Open</option>
                 <option>Closed</option>
             </select>
-
         </div>
-
-        <button type="submit" class="btn btn-success">
-            Add Trek
-        </button>
-
-        <a href="/manage_trek" class="btn btn-secondary">
-            Back
-        </a>
-
+        <button type="submit" class="btn btn-success">Add Trek</button>
+        <a href="/manage_trek" class="btn btn-secondary">Back</a>
     </form>
-
 </body>
 
 </html>
