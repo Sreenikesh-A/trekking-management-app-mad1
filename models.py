@@ -16,6 +16,7 @@ class Trek(db.Model):
     duration = db.Column(db.Integer, nullable=False)
     slots = db.Column(db.Integer, nullable=False)
     status = db.Column(db.String(20), nullable=False)
+    assigned_staff_id = db.Column(db.Integer)
 
 class Booking(db.Model):
     id = db.Column(db.Integer, primary_key=True)

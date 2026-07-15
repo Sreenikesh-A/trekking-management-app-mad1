@@ -12,7 +12,7 @@ def login():
         password=request.form['password']
         user=User.query.filter_by(mail=mail,password=password).first()
         if user:
-            session['user_id'] = user.id
+            session['user_id']=user.id
             if user.role == "Trek Staff":
                 if user.status == "Pending":
                     return "Your account is waiting for admin approval."
@@ -129,7 +129,7 @@ def assign_staff(id):
     trek = Trek.query.get(id)
     staffs = User.query.filter_by(role="Trek Staff",status="Approved").all()
     if request.method == 'POST':
-        trek.assigned_staff_id = request.form['staff_id']
+        trek.assigned_staff_id = int(request.form['staff_id'])
         db.session.commit()
         return redirect('/manage_trek')
 
@@ -166,7 +166,7 @@ def booking_history():
     return render_template("booking_history.html",bookings=bookings) 
 
 @app.route('/my_bookings')
-def bookings():
+def my_bookings():
     bookings = Booking.query.filter_by(user_id=session['user_id']).all()
     return render_template("bookings.html",bookings=bookings)  
 

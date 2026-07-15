@@ -4,10 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>Welcome to the Admin Dashboard</h1>
-    <a href="/logout" class="btn btn-danger">Logout</a>
+<body class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center">
+        <h1>Admin Dashboard</h1>
+        <a href="/logout" class="btn btn-danger">Logout</a>
+    </div>
+    <hr>
+    <div class="d-flex gap-3 mt-4">
+        <a href="/manage_trek" class="btn btn-primary">Manage Treks</a>
+        <a href="/manage_staff" class="btn btn-primary">Manage Staff</a>
+        <a href="/manage_bookings" class="btn btn-primary">Manage Bookings</a>
+    </div>
     <hr>
     <h3>Dashboard Summary</h3>
     <p><strong>Total Treks:</strong> {{ total_treks }}</p>
@@ -15,12 +24,6 @@
     <p><strong>Total Staff:</strong> {{ total_staff }}</p>
     <p><strong>Total Bookings:</strong> {{ total_bookings }}</p>
     <hr>
-    <ul>
-        <a href="/manage_trek">Manage Treks</a>
-        <br><br>
-        <a href="/manage_staff">Manage Staff</a>
-        <br><br>
-        <a href="/manage_bookings">Manage Bookings</a>
-    </ul>
+
 </body>
 </html>
